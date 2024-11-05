@@ -49,7 +49,7 @@ class Product(models.Model):
 class Image(models.Model):
     # Product images model
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    file = models.ImageField(upload_to='images/%Y/%m/%d')
+    file = models.ImageField(upload_to='product_images/%Y/%m/%d')
     title = models.CharField(max_length=250, null=True, blank=True)
     description = models.TextField(max_length=250, null=True, blank=True)
     created = jmodels.jDateTimeField(auto_now_add=True)
