@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'parent/base.html' %}
+{% load static %}
+{% block title %} {{ product.name }} {% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+<h2 class="product-details-title">جزییات محصول</h2>
+
+    <div class="product-details-card">
+        <div class="product-info-and-images">
+            <div class="product-info">
+                <h4>{{ product.name }}</h4>
+                <small class="product-meta">دسته بندی: {{ product.category }}</small>
+                <small class="product-meta">موجودی: {{ product.inventory }}</small>
+                <div class="product-prices">
+                    <span class="old-price">قیمت: {{ product.price }}</span>
+                    <span class="new-price">قیمت با تخفیف: {{ product.new_price }}</span>
+                </div>
+
+                {% for f in product.features.all %}
+                    <p class="product-feature">{{ f.name }}: {{ f.value }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="product-images">
+                {% for img in product.images.all %}
+                    <img src="{{ img.file.url }}" alt="{{ product.name }}">
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="product-description">
+            <h4>توضیحات محصول</h4>
+            <p>{{ product.description }}</p>
+        </div>
+    </div>
+
+{% endblock %}
