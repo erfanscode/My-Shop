@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'parent/base.html' %}
+{% load static %}
+{% block title %} لیست محصولات {% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+    {% if category %}
+        <h2>محصولات در دسته بندی {{ category.name }}</h2>
+    {% else %}
+        <h2>لیست محصولات</h2>
+    {% endif %}
+
+    <ul class="category-list">
+        <li><a href="{% url 'shop:product-list' %}">همه محصولات</a></li>
+        {% for ct in categories %}
+            <li><a href="{{ ct.get_absolute_url }}">{{ ct.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <div class="product-list">
+        {% for product in products %}
+            <div class="product-card">
+                <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+                <img src="{{ product.images.first.file.url }}" alt="{{ product.name }}">
+                <div class="product-prices">
+                    <span class="old-price">{{ product.price }}</span>
+                    <span class="new-price">{{ product.new_price }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
