@@ -1,0 +1,10 @@
+<header class="header">
+    <div class="container">
+        {% with item_count=cart|length %}
+            <a href="#" class="cart">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-count">{{ item_count }}</span>
+            </a>
+        {% endwith %}
+    </div>
+</header>
