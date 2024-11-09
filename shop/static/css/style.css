@@ -199,3 +199,9 @@ h4 {
     font-size: 0.9rem;
     font-weight: bold;
 }
+
+.total-price {
+    direction: rtl;
+    position: absolute;
+    margin-left: 4rem;
+}

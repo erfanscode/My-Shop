@@ -5,6 +5,7 @@
                 <span class="cart-icon">🛒</span>
                 <span class="cart-count">{{ item_count }}</span>
             </a>
+            <span class="total-price">{{ cart.get_total_price }} تومان</span>
         {% endwith %}
     </div>
 </header>
