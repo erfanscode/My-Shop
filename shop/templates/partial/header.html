@@ -3,9 +3,9 @@
         {% with item_count=cart|length %}
             <a href="#" class="cart">
                 <span class="cart-icon">🛒</span>
-                <span class="cart-count">{{ item_count }}</span>
+                <span id="item_count" class="cart-count">{{ item_count }}</span>
             </a>
-            <span class="total-price">{{ cart.get_total_price }} تومان</span>
+            <span id="total_price" class="total-price">{{ cart.get_total_price }} تومان</span>
         {% endwith %}
     </div>
 </header>
