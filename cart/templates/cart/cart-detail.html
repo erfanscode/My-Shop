@@ -3,30 +3,34 @@
 {% block title %}سبد خرید{% endblock %}
 {% block content %}
 
+    <h2>سبد خرید</h2>
+
     {% for item in cart %}
-
-        <a href="{% url 'shop:product-detail' item.product.id item.product.slug %}">
-            <h4>{{ item.product.name }}</h4>
-            <img src="{{ item.product.images.first.file.url }}">
-        </a>
-
-        <span>تعداد: {{ item.quantity }}</span>
-        <span>قیمت واحد: {{ item.price }}</span>
-        <span>مجموع قیمت: {{ item.total }}</span>
-
-        <span class="quantity-add">+</span>
-        <span class="quantity-decrease">-</span>
-        <span class="quantity-remove">حذف</span>
-
+        <div class="cart-item">
+            <a href="{% url 'shop:product-detail' item.product.id item.product.slug %}">
+                <img src="{{ item.product.images.first.file.url }}" alt="{{ item.product.name }}">
+                <h4>{{ item.product.name }}</h4>
+            </a>
+            <div class="cart-details">
+                <span>تعداد: {{ item.quantity }}</span>
+                <span>قیمت واحد: {{ item.price }}</span>
+                <span>مجموع قیمت: {{ item.total }}</span>
+            </div>
+            <div class="quantity-controls">
+                <span class="quantity-add">+</span>
+                <span class="quantity-decrease">-</span>
+                <span class="quantity-remove">حذف</span>
+            </div>
+        </div>
     {% endfor %}
 
-    <div>
+    <div class="cart-summary">
         <p>قیمت کل: {{ cart.get_total_price }} تومان</p>
         <p>هزینه ارسال: {{ cart.get_post_price }} تومان</p>
         <p>هزینه نهایی: {{ cart.get_final_price }} تومان</p>
     </div>
 
-    <div>
+    <div class="cart-actions">
         <div class="continue-btn"><a href="#">ادامه خرید</a></div>
         <div class="back-btn"><a href="{% url 'shop:product-list' %}">بازگشت به لیست محصولات</a></div>
     </div>
