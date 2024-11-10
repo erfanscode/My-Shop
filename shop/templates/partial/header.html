@@ -1,7 +1,7 @@
 <header class="header">
     <div class="container">
         {% with item_count=cart|length %}
-            <a href="#" class="cart">
+            <a href="{% url 'cart:cart-detail' %}" class="cart">
                 <span class="cart-icon">🛒</span>
                 <span id="item_count" class="cart-count">{{ item_count }}</span>
             </a>
