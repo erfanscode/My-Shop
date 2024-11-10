@@ -21,3 +21,11 @@ def add_to_cart(request, product_id):
         return JsonResponse(context)
     except:
         return JsonResponse({'error': 'درخواست نامعتبر'})
+
+def cart_detail(request):
+    # show all user cart products
+    cart = Cart(request)
+    context = {
+        'cart': cart,
+    }
+    return render(request, 'cart/cart-detail.html', context)
