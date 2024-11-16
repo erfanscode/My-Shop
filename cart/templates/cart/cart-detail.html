@@ -6,15 +6,15 @@
     <h2>سبد خرید</h2>
 
     {% for item in cart %}
-        <div class="cart-item">
+        <div class="product-item" data-item-id="{{ item.product.id }}">
             <a href="{% url 'shop:product-detail' item.product.id item.product.slug %}">
                 <img src="{{ item.product.images.first.file.url }}" alt="{{ item.product.name }}">
                 <h4>{{ item.product.name }}</h4>
             </a>
             <div class="cart-details">
-                <span>تعداد: {{ item.quantity }}</span>
+                <span id="item-quantity-{{ item.product.id }}">تعداد: {{ item.quantity }}</span>
                 <span>قیمت واحد: {{ item.price }}</span>
-                <span>مجموع قیمت: {{ item.total }}</span>
+                <span id="item-total-{{ item.product.id }}">مجموع قیمت: {{ item.total }}</span>
             </div>
             <div class="quantity-controls">
                 <span class="quantity-add">+</span>
@@ -25,14 +25,56 @@
     {% endfor %}
 
     <div class="cart-summary">
-        <p>قیمت کل: {{ cart.get_total_price }} تومان</p>
+        <p id="products-total">قیمت کل: {{ cart.get_total_price }} تومان</p>
         <p>هزینه ارسال: {{ cart.get_post_price }} تومان</p>
-        <p>هزینه نهایی: {{ cart.get_final_price }} تومان</p>
+        <p id="final-price">هزینه نهایی: {{ cart.get_final_price }} تومان</p>
     </div>
 
     <div class="cart-actions">
         <div class="continue-btn"><a href="#">ادامه خرید</a></div>
         <div class="back-btn"><a href="{% url 'shop:product-list' %}">بازگشت به لیست محصولات</a></div>
     </div>
+
+{% endblock %}
+
+{% block script %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+
+        $(document).ready(function() {
+            $('.quantity-add').on('click', function() {
+                updateQuantity('add', $(this).closest('.product-item').data('item-id'));
+            });
+
+            $('.quantity-decrease').on('click', function () {
+                updateQuantity('decrease', $(this).closest('.product-item').data('item-id'));
+            });
+
+            function updateQuantity(action, itemId) {
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'cart:update-quantity' %}",
+                    data: { 'csrfmiddlewaretoken': '{{ csrf_token }}', 'action': action, 'item_id': itemId },
+                    success: function(data) {
+                        if (data.success){
+                            $('#item_count').text(data.item_count);
+                            $('#item_total').text(data.total_price + ' تومان ');
+                            $('#item-quantity-' + itemId).text('تعداد: ' + data.quantity);
+                            $('#item-total-' + itemId).text('مجموع قیمت: ' + data.total);
+                            $('#products-total').text(' قیمت کل: ' + data.total_price + ' تومان ');
+                            $('#final-price').text(' هزینه نهایی: ' + data.final_price + ' تومان ');
+                        }
+                        else {
+                            alert('خطا در انجام عملیات');
+                        }
+                    }
+
+                });
+            }
+
+        });
+
+    </script>
 
 {% endblock %}
