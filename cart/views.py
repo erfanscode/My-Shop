@@ -56,3 +56,26 @@ def update_quantity(request):
             'error': 'درخواست نامعتبر',
         }
         return JsonResponse(context)
+
+@require_POST
+def remove_item(request):
+    # remove a product complete
+    item_id = request.POST.get('item_id')
+    try:
+        product = get_object_or_404(Product, id=item_id)
+        cart = Cart(request)
+        cart.remove(product)
+        context = {
+            'item_count': len(cart),
+            'total_price': cart.get_total_price(),
+            'final_price': cart.get_final_price(),
+            'success': True,
+        }
+        return JsonResponse(context)
+
+    except:
+        context = {
+            'success': False,
+            'error': 'درخواست نامعتبر',
+        }
+        return JsonResponse(context)

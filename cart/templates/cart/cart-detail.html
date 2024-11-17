@@ -51,6 +51,10 @@
                 updateQuantity('decrease', $(this).closest('.product-item').data('item-id'));
             });
 
+            $('.quantity-remove').on('click', function () {
+                removeItem($(this).closest('.product-item').data('item-id'));
+            })
+
             function updateQuantity(action, itemId) {
                 $.ajax({
                     type: 'POST',
@@ -70,6 +74,26 @@
                         }
                     }
 
+                });
+            }
+
+            function removeItem(itemId) {
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'cart:remove-item' %}",
+                    data: { 'item_id': itemId, 'csrfmiddlewaretoken': '{{ csrf_token }}' },
+                    success: function (data) {
+                        if (data.success) {
+                            $('#item_count').text(data.item_count);
+                            $('#item_total').text(data.total_price + ' تومان ');
+                            $('#products-total').text(' قیمت کل: ' + data.total_price + ' تومان ');
+                            $('#final-price').text(' هزینه نهایی: ' + data.final_price + ' تومان ');
+                            $(`.product-item[data-item-id=${itemId}]`).remove();
+                        }
+                        else {
+                            alert('خطا در حذف محصول');
+                        }
+                    }
                 });
             }
 
