@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_jalali',
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [
