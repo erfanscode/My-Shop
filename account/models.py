@@ -26,7 +26,7 @@ class ShopUserManager(BaseUserManager):
 
 
 class ShopUser(AbstractBaseUser, PermissionsMixin):
-    # Costume user for shop
+    # Custom user for shop
     phone = models.CharField(max_length=11, unique=True, verbose_name='موبایل')
     first_name = models.CharField(max_length=50, verbose_name='نام')
     last_name = models.CharField(max_length=50, verbose_name='نام خانوادگی')
