@@ -1,10 +1,10 @@
-from email.policy import default
-
 from django.db import models
+from account.models import ShopUser
 from shop.models import Product
 
 
 class Order(models.Model):
+    buyer = models.ForeignKey(ShopUser, on_delete=models.SET_NULL, null=True, related_name='orders')
     first_name = models.CharField(max_length=50, verbose_name="نام")
     last_name = models.CharField(max_length=50, verbose_name="نام خانوادگی")
     phone = models.CharField(max_length=11, verbose_name="موبایل")
