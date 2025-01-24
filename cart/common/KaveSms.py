@@ -7,7 +7,7 @@ from urllib.error import HTTPError
 # Send SMS with token
 def send_sms_with_template(receptor, tokens:dict, template):
     try:
-        api = KavenegarAPI('6E465A78557030392F4C74754479576C4469786557324D6D6C58632B49477232684230767A434D565961553D')
+        api = KavenegarAPI('5353674B775641774A757843304F666479464D786648645553495845504C6A342B4A6D426C6967585777553D')
         params = {
             'receptor': receptor,
             'template': template,
@@ -29,11 +29,11 @@ def send_sms_with_template(receptor, tokens:dict, template):
 # Send normal SMS(without Token)
 def send_sms_normal(receptor, message):
     try:
-        api = KavenegarAPI('6E465A78557030392F4C74754479576C4469786557324D6D6C58632B49477232684230767A434D565961553D')
+        api = KavenegarAPI('5353674B775641774A757843304F666479464D786648645553495845504C6A342B4A6D426C6967585777553D')
         params_buyer = {
             'receptor': receptor,
             'message': message,
-            'sender': '2000660110'
+            'sender': '',
         }
         response = api.sms_send(params_buyer)
         print(response)
