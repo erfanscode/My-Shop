@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 from shop.models import Product
 from .cart import Cart
 from django.http import JsonResponse
+from .common.KaveSms import send_sms_with_template, send_sms_normal
 
 
 @require_POST
@@ -16,6 +17,13 @@ def add_to_cart(request, product_id):
             'item_count': len(cart),
             'total_price': cart.get_total_price(),
         }
+        # --------- Send SMS ---------
+        send_sms_with_template(
+            '09223364590',
+            {'token': 'لپ تاپ acer', 'token2': '5610'},
+            'add-to-cart'
+        )
+        # --------- End Send SMS ---------
         return JsonResponse(context)
     except:
         return JsonResponse({'error': 'درخواست نامعتبر'})
@@ -71,6 +79,12 @@ def remove_item(request):
             'final_price': cart.get_final_price(),
             'success': True,
         }
+        # --------- Send SMS ---------
+        send_sms_normal(
+            '09223364590',
+            'محصول موردنظر از سبد خرید حذف شد',
+        )
+        # --------- End Send SMS ---------
         return JsonResponse(context)
 
     except:
