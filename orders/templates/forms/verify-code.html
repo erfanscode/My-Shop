@@ -1,0 +1,16 @@
+{# ---- Template for verification code ---- #}
+<div>
+    <h4>تایید کد ارسال شده</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="code" placeholder="کد تایید">
+        <br>
+        <input type="submit" value="تایید">
+    </form>
+
+    {# ---- Show error messages ---- #}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+</div>
