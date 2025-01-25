@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{# ---- Template for verification phone number ---- #}
+<div>
+    <h4>تایید شماره موبایل</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="ارسال">
+    </form>
+
+    {# ---- Show error messages ---- #}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+</div>
