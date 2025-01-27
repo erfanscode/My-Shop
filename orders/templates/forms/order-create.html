@@ -1,0 +1,12 @@
+<h4>محصولات انتخابی</h4>
+{% for item in cart %}
+    <p>نام محصول: {{ item.product.name }}</p>
+    <p>تعداد محصول: {{ item.quantity }}</p>
+{% endfor %}
+
+<h4>تکمیل مشخصات</h4>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="ثبت">
+</form>

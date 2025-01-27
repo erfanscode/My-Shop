@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
+from .models import Order, OrderItem
 from account.models import ShopUser
-from .forms import PhoneVerificationForm
+from .forms import PhoneVerificationForm, OrderCreateForm
+from cart.cart import Cart
 from cart.common.KaveSms import *
 import random
 
@@ -46,3 +49,24 @@ def verify_code(request):
             else:
                 messages.error(request, 'کد وارد شده صحیح نمی باشد')
     return render(request, 'forms/verify-code.html')
+
+@login_required
+def order_create(request):
+    cart = Cart(request)
+    if request.method == 'POST':
+        form = OrderCreateForm(request.POST)
+        if form.is_valid():
+            order = form.save()
+            for item in cart:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item['product'],
+                    price=item['price'],
+                    quantity=item['quantity'],
+                    weight=item['weight'],
+                )
+            cart.clear()
+            return redirect("shop:product-list")
+    else:
+        form = OrderCreateForm()
+    return render(request, 'forms/order-create.html', {'form': form, 'cart': cart})
