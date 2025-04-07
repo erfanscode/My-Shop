@@ -1,4 +1,4 @@
-from operator import truediv
+from decouple import config
 
 from kavenegar import *
 from urllib.error import HTTPError
@@ -7,7 +7,7 @@ from urllib.error import HTTPError
 # Send SMS with token
 def send_sms_with_template(receptor, tokens:dict, template):
     try:
-        api = KavenegarAPI('5353674B775641774A757843304F666479464D786648645553495845504C6A342B4A6D426C6967585777553D')
+        api = KavenegarAPI(config('KAVENEGAR_API_KEY'))
         params = {
             'receptor': receptor,
             'template': template,
@@ -29,7 +29,7 @@ def send_sms_with_template(receptor, tokens:dict, template):
 # Send normal SMS(without Token)
 def send_sms_normal(receptor, message):
     try:
-        api = KavenegarAPI('5353674B775641774A757843304F666479464D786648645553495845504C6A342B4A6D426C6967585777553D')
+        api = KavenegarAPI(config('KAVENEGAR_API_KEY'))
         params_buyer = {
             'receptor': receptor,
             'message': message,
