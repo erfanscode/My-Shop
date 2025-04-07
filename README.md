@@ -65,8 +65,4 @@ A fully-featured e-commerce platform built with Django.
 - **cart**: Shopping cart functionality
 - **orders**: Order processing and management
 - **account**: User authentication and profile management
-- **base**: Core project settings and configuration
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+- **base**: Core project settings and configuration 
