@@ -19,8 +19,8 @@ def add_to_cart(request, product_id):
         }
         # --------- Send SMS ---------
         send_sms_with_template(
-            '09223364590',
-            {'token': 'لپ تاپ acer', 'token2': '5610'},
+            'receptor-phone-num(example:09123456789'),
+            {'token': 'your_token1', 'token2': 'your_token2'},
             'add-to-cart'
         )
         # --------- End Send SMS ---------
@@ -81,7 +81,7 @@ def remove_item(request):
         }
         # --------- Send SMS ---------
         send_sms_normal(
-            '09223364590',
+            'receptor-phone-num(example:09123456789'),
             'محصول موردنظر از سبد خرید حذف شد',
         )
         # --------- End Send SMS ---------
