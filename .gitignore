@@ -11,3 +11,5 @@ media
 .idea
 migrations/
 migrations
+
+.env
