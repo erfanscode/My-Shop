@@ -41,7 +41,7 @@ def verify_code(request):
                 user.set_password(user_password)
                 user.save()
                 send_data = {'token1': phone, 'token2': user_password}
-                send_sms_with_template(phone, send_data, 'create-account')
+                send_sms_with_template(phone, send_data, 'your-template-name')
                 login(request, user)
                 del request.session['verification-code']
                 del request.session['phone']
